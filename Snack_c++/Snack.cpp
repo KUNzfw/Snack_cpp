@@ -137,7 +137,7 @@ void Snack::start() {
 			}
 		}
 
-		if (GetTickCount() - time >= 300)
+		if (GetTickCount() - time >= 150)
 		{
 			direction = temp;
 
