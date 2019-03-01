@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <deque>
+#include <string>
 #include "Paint.h"
 #include "KeyBoradInput.h"
 namespace kun {

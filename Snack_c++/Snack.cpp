@@ -9,7 +9,22 @@ void Snack::init() {
 void Snack::selection() {
 	//重置
 	clearMap();
-	paint.setCursorPosition(0, 1);
+	paint.setCursorPosition(0, 0);
+	//清除计分板
+	for (int x = mapW; x <= mapW + 10; x++)
+	{
+		for (int y = 0; y < mapH; y++)
+		{
+			if (x == mapW + 10 || y == 0 || y == mapH - 1)
+			{
+				paint.consoleOutput("  ", BLACK, HIGHLIGHT, x * 2, y);
+			}
+			else
+			{
+				paint.consoleOutput("  ", BLACK, HIGHLIGHT, x * 2, y);
+			}
+		}
+	}
 
 	int sel = 0;
 
@@ -29,7 +44,7 @@ void Snack::selection() {
 	//绘制选项
 	paint.consoleOutput("Start", HIGHLIGHT, BLACK, 20, 10);
 	paint.consoleOutput("Exit", BLACK, HIGHLIGHT, 20, 15);
-	paint.setCursorPosition(0, 1);
+	paint.setCursorPosition(0, 0);
 
 	while (true) {
 		if (kbInput.ifKeyPress()) {
@@ -56,7 +71,6 @@ void Snack::selection() {
 					sel = 0;
 					paint.consoleOutput("Start", HIGHLIGHT, BLACK, 20, 10);
 					paint.consoleOutput("Exit", BLACK, HIGHLIGHT, 20, 15);
-					paint.setCursorPosition(0, 1);
 				}
 				break;
 			case s:
@@ -64,7 +78,6 @@ void Snack::selection() {
 					sel = 1;
 					paint.consoleOutput("Start", BLACK, HIGHLIGHT, 20, 10);
 					paint.consoleOutput("Exit", HIGHLIGHT, BLACK, 20, 15);
-					paint.setCursorPosition(0, 1);
 				}
 				break;
 			}
@@ -74,7 +87,8 @@ void Snack::selection() {
 	}
 }
 //游戏开始
-void Snack::start() {
+void Snack::start(){
+
 	//清除地图
 	clearMap();
 
@@ -85,11 +99,31 @@ void Snack::start() {
 	paint.consoleOutput("  ", GREEN, BLACK, snack.front());
 
 	//初始化计时器
-	DWORD time = GetTickCount();
+	DWORD timer = GetTickCount();
+	time_t gameStartTime = time(0);
 	//初始化食物
 	genFood();
 	//临时变量
 	Direction temp = (Direction)direction;
+
+	//设置记分板
+	for (int x = mapW; x <= mapW + 10; x++)
+	{
+		for (int y = 0; y < mapH; y++)
+		{
+			if (x == mapW + 10 || y == 0 || y == mapH - 1)
+			{
+				paint.consoleOutput("  ", WHITE, HIGHLIGHT, x * 2, y);
+			}
+			else
+			{
+				paint.consoleOutput("  ", BLACK, HIGHLIGHT, x * 2, y);
+			}
+		}
+	}
+	paint.consoleOutput("SCORE:", BLACK, BLACK, (mapW + 3) * 2, 1);
+	paint.consoleOutput("TIME:", BLACK, BLACK, (mapW + 3) * 2, 4);
+	paint.consoleOutput("SPEED:", BLACK, BLACK, (mapW + 3) * 2, 7);
 
 	while (true)
 	{
@@ -118,7 +152,7 @@ void Snack::start() {
 			}
 		}
 		//游戏更新 
-		if (GetTickCount() - time >= (time_t)gameSpeed)
+		if (GetTickCount() - timer >= (time_t)gameSpeed)
 		{
 			direction = temp;
 
@@ -137,8 +171,6 @@ void Snack::start() {
 					paint.consoleOutput("  ", BLACK, HIGHLIGHT, snack.back());
 					snack.pop_back();
 				}
-				//设置光标增加观赏性
-				paint.setCursorPosition(0, 1);
 				break;
 			case SOUTH:
 				snack.push_front(Coord(snack.front().getX(), snack.front().getY() + 1));
@@ -151,7 +183,6 @@ void Snack::start() {
 					paint.consoleOutput("  ", BLACK, HIGHLIGHT, snack.back());
 					snack.pop_back();
 				}
-				paint.setCursorPosition(0, 1);
 				break;
 			case WEST:
 				snack.push_front(Coord(snack.front().getX() - 2, snack.front().getY()));
@@ -164,7 +195,6 @@ void Snack::start() {
 					paint.consoleOutput("  ", BLACK, HIGHLIGHT, snack.back());
 					snack.pop_back();
 				}
-				paint.setCursorPosition(0, 1);
 				break;
 			case EAST:
 				snack.push_front(Coord(snack.front().getX() + 2, snack.front().getY()));
@@ -177,7 +207,6 @@ void Snack::start() {
 					paint.consoleOutput("  ", BLACK, HIGHLIGHT, snack.back());
 					snack.pop_back();
 				}
-				paint.setCursorPosition(0, 1);
 				break;
 			}
 			//检测是否吃到身体
@@ -201,7 +230,12 @@ void Snack::start() {
 			}
 
 			//更新时间
-			time = GetTickCount();
+			timer = GetTickCount();
+
+			//更新记分板
+			paint.consoleOutput(snackLong - 1, BLACK, BLACK, (mapW + 3) * 2, 2);
+			paint.consoleOutput(std::to_string(time(0) - gameStartTime) + "s", BLACK, BLACK, (mapW + 3) * 2, 5);
+			paint.consoleOutput(gameSpeed, BLACK, BLACK, (mapW + 3) * 2, 8);
 		}
 		//减少cpu占用
 		Sleep(1);
@@ -212,7 +246,7 @@ void Snack::over() {
 	//清除地图
 	clearMap();
 
-	paint.consoleOutput("GAME OVER!!!", BLACK, HIGHLIGHT, 20, 20);
+	paint.consoleOutput("GAME OVER!!!", BLACK, HIGHLIGHT, 20, 15);
 	//清除蛇的链表
 	snack.clear();
 	while (true)
@@ -244,7 +278,7 @@ void Snack::genFood() {
 	{
 		//随机生成food位置
 		std::srand((unsigned int)std::time(0));
-		foodPostiton = Coord((rand() % (mapW - 4) + 2) * 2, rand() % (mapH - 4) + 3);
+		foodPostiton = Coord((rand() % (mapW - 4) + 2) * 2, rand() % (mapH - 4) + 2);
 
 		for (std::deque<Coord>::iterator i = snack.begin(); i < snack.end(); i++)
 		{
