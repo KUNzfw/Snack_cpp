@@ -99,7 +99,7 @@ void Snack::start(){
 	paint.consoleOutput("  ", GREEN, BLACK, snack.front());
 
 	//初始化计时器
-	DWORD timer = GetTickCount();
+	DWORD timer = GetTickCount64();
 	time_t gameStartTime = time(0);
 	//初始化食物
 	genFood();
@@ -152,7 +152,7 @@ void Snack::start(){
 			}
 		}
 		//游戏更新 
-		if (GetTickCount() - timer >= (time_t)gameSpeed)
+		if (GetTickCount64() - timer >= (time_t)gameSpeed)
 		{
 			direction = temp;
 
@@ -230,7 +230,7 @@ void Snack::start(){
 			}
 
 			//更新时间
-			timer = GetTickCount();
+			timer = GetTickCount64();
 
 			//更新记分板
 			paint.consoleOutput(snackLong - 1, BLACK, BLACK, (mapW + 3) * 2, 2);
