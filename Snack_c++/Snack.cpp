@@ -25,7 +25,7 @@ void Snack::selection() {
 			}
 		}
 	}
-
+	paint.setCursorPosition(0, 0);
 	int sel = 0;
 
 	//»æÖÆµØÍ¼·½¿ò
