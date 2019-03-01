@@ -1,6 +1,6 @@
 #include "Coord.h"
 
-
+using namespace kun;
 
 Coord::Coord()
 {

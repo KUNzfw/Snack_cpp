@@ -1,33 +1,56 @@
 #include "Paint.h"
-void Paint::setCursorPostition(short x, short y) {
+using namespace kun;
+
+void Paint::setCursorPosition(short x, short y) {
 	COORD c = { x,y }; //坐标
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);//
-	SetConsoleCursorPosition(h, c);//设置光标位置
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置光标位置
 }
-void Paint::setCursorPostition(Coord coord) {
+void Paint::setCursorPosition(Coord coord) {
 	COORD c = { (short)coord.getX(),(short)coord.getY() }; //坐标
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);//
-	SetConsoleCursorPosition(h, c);//设置光标位置
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);//设置光标位置
 }
-void Paint::setBackGroundColor(Color c) {
-	switch (c)
+void Paint::setColor(Color backgroundColor,Color textColor) {
+	WORD color = FOREGROUND_INTENSITY;
+	//背景颜色
+	switch (backgroundColor)
 	{
 	case HIGHLIGHT:
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY);
+		color = color | BACKGROUND_INTENSITY;
 		break;
 	case WHITE:
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+		color = color | BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
 		break;
 	case BLACK:
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 		break;
 	case GREEN:
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_GREEN);
+		color = color | BACKGROUND_INTENSITY | BACKGROUND_GREEN;
 		break;
 	case RED:
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED);
+		color = color | BACKGROUND_INTENSITY | BACKGROUND_RED;
 		break;
-	default:
+	case BULE:
+		color = color | BACKGROUND_INTENSITY | BACKGROUND_BLUE;
 		break;
 	}
+	//字体颜色
+	switch (textColor)
+	{
+	case HIGHLIGHT:
+		break;
+	case WHITE:
+		break;
+	case BLACK:
+		color = color | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+		break;
+	case GREEN:
+		color = color | FOREGROUND_GREEN;
+		break;
+	case RED:
+		color = color | FOREGROUND_RED;
+		break;
+	case BULE:
+		color = color | FOREGROUND_BLUE;
+	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
+

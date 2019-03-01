@@ -1,4 +1,7 @@
 #include "KeyBoradInput.h"
+
+using namespace kun;
+
 bool KeyBoradInput::ifKeyPress() {
 	return _kbhit();
 }

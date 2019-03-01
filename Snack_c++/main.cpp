@@ -3,9 +3,7 @@
 #include <iostream>
 #include "Snack.h"
 
-using std::cout;
-using std::endl;
-using std::cin;
+using namespace kun;
 
 Snack game = Snack();
 
