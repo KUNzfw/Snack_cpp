@@ -89,7 +89,7 @@ void Snack::selection() {
 	}
 }
 //游戏开始
-void Snack::start(){
+void Snack::start() {
 
 	//清除地图
 	clearMap();
@@ -216,12 +216,11 @@ void Snack::start(){
 				break;
 			}
 			//检测是否吃到身体
-			for (std::deque<Coord>::iterator b = snack.begin() + 1; b < snack.end(); b++) {
-				if (snack.front().getX() == (*b).getX() && snack.front().getY() == (*b).getY()) {
+			for (std::deque<Coord>::iterator a = snack.begin() + 3; a < snack.end(); a++)
+				if (a->getX() == snack.front().getX() && a->getY() == snack.front().getY()) {
 					over();
 					return;
 				}
-			}
 			//检测是否撞墙
 			if (snack.front().getX() == 2 || snack.front().getX() == mapW * 2 - 2 || snack.front().getY() == 1 || snack.front().getY() == mapH) {
 				over();
