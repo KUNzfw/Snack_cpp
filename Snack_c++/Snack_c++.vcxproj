@@ -119,12 +119,14 @@
     <ClCompile Include="KeyBoradInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Paint.cpp" />
+    <ClCompile Include="Selection.cpp" />
     <ClCompile Include="Snack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coord.h" />
     <ClInclude Include="KeyBoradInput.h" />
     <ClInclude Include="Paint.h" />
+    <ClInclude Include="Selection.h" />
     <ClInclude Include="Snack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

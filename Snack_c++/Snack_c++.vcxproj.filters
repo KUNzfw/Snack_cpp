@@ -6,11 +6,13 @@
     <ClCompile Include="Coord.cpp" />
     <ClCompile Include="KeyBoradInput.cpp" />
     <ClCompile Include="Paint.cpp" />
+    <ClCompile Include="Selection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Snack.h" />
     <ClInclude Include="Coord.h" />
     <ClInclude Include="KeyBoradInput.h" />
     <ClInclude Include="Paint.h" />
+    <ClInclude Include="Selection.h" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #ifndef PAINT_KUN
 #define PAINT_KUN
 #include <Windows.h>
+#include <iostream>
 #include "Coord.h"
 namespace kun {
 	enum Color

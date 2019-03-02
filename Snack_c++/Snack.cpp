@@ -40,52 +40,20 @@ void Snack::selection() {
 		}
 		std::cout << std::endl;
 	}
-
-	//绘制选项
-	paint.consoleOutput("Start", HIGHLIGHT, BLACK, 20, 10);
-	paint.consoleOutput("Exit", BLACK, HIGHLIGHT, 20, 15);
 	paint.setCursorPosition(0, 0);
-
-	while (true) {
-		if (kbInput.ifKeyPress()) {
-			//检测键盘输入
-			switch (kbInput.getKeyBoardChar())
-			{
-			case enter:
-				switch (sel)
-				{
-				case 1:
-					//退出游戏
-					exit(0);
-					break;
-				case 0:
-					//开始游戏并返回
-					start();
-					return;
-					break;
-				}
-				break;
-				//切换选项
-			case W:
-			case w:
-				if (sel == 1) {
-					sel = 0;
-					paint.consoleOutput("Start", HIGHLIGHT, BLACK, 20, 10);
-					paint.consoleOutput("Exit", BLACK, HIGHLIGHT, 20, 15);
-				}
-				break;
-			case S:
-			case s:
-				if (sel == 0) {
-					sel = 1;
-					paint.consoleOutput("Start", BLACK, HIGHLIGHT, 20, 10);
-					paint.consoleOutput("Exit", HIGHLIGHT, BLACK, 20, 15);
-				}
-				break;
-			}
-		}
-		//减少cpu占用
-		Sleep(1);
+	//选项列表
+	Selection selec = Selection();
+	selec.addSelection("Start", mapW - 5, mapH / 3 * 1, 0);
+	selec.addSelection("End", mapW - 5, mapH / 3 * 2, 1);
+	selec.show();
+	switch (selec.waitForChoose())
+	{
+	case 0:
+		start();
+		return;
+		break;
+	case 1:
+		system("exit");
 	}
 }
 //游戏开始
@@ -222,7 +190,7 @@ void Snack::start() {
 					return;
 				}
 			//检测是否撞墙
-			if (snack.front().getX() == 2 || snack.front().getX() == mapW * 2 - 2 || snack.front().getY() == 1 || snack.front().getY() == mapH) {
+			if (snack.front().getX() == 2 || snack.front().getX() == mapW * 2 - 2 || snack.front().getY() == 0 || snack.front().getY() == mapH - 1) {
 				over();
 				return;
 			}

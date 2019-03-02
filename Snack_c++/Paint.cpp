@@ -38,9 +38,8 @@ void Paint::setColor(Color backgroundColor,Color textColor) {
 	case HIGHLIGHT:
 		break;
 	case WHITE:
-		break;
-	case BLACK:
 		color = color | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+	case BLACK:
 		break;
 	case GREEN:
 		color = color | FOREGROUND_GREEN;

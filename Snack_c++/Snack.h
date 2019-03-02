@@ -10,6 +10,7 @@
 #include <string>
 #include "Paint.h"
 #include "KeyBoradInput.h"
+#include "Selection.h"
 namespace kun {
 	enum Direction
 	{
