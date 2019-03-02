@@ -4,7 +4,7 @@
 namespace kun {
 	enum KeyChar
 	{
-		a, s, d, w, enter, null, space
+		a, s, d, w, enter, null, space, A, S, W, D
 	};
 	class KeyBoradInput {
 	public:

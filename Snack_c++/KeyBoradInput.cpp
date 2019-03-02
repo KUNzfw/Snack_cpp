@@ -22,8 +22,15 @@ KeyChar KeyBoradInput::getKeyBoardChar() {
 		return enter;
 	case 32:
 		return space;
+	case 65:
+		return A;
+	case 87:
+		return W;
+	case 83:
+		return S;
+	case 68:
+		return D;
 	default:
 		return null;
-		break;
 	}
 }

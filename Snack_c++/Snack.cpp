@@ -66,6 +66,7 @@ void Snack::selection() {
 				}
 				break;
 				//ÇÐ»»Ñ¡Ïî
+			case W:
 			case w:
 				if (sel == 1) {
 					sel = 0;
@@ -73,6 +74,7 @@ void Snack::selection() {
 					paint.consoleOutput("Exit", BLACK, HIGHLIGHT, 20, 15);
 				}
 				break;
+			case S:
 			case s:
 				if (sel == 0) {
 					sel = 1;
@@ -131,18 +133,22 @@ void Snack::start(){
 		if (kbInput.ifKeyPress()) {
 			switch (kbInput.getKeyBoardChar())
 			{
+			case W:
 			case w:
 				if (direction != SOUTH)
 					temp = NORTH;
 				break;
+			case S:
 			case s:
 				if (direction != NORTH)
 					temp = SOUTH;
 				break;
+			case A:
 			case a:
 				if (direction != EAST)
 					temp = WEST;
 				break;
+			case D:
 			case d:
 				if (direction != WEST)
 					temp = EAST;
