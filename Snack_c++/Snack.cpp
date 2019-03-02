@@ -182,6 +182,8 @@ void Snack::start() {
 				}
 				break;
 			}
+			//更新时间
+			timer = GetTickCount64();
 			//检测是否吃到身体
 			for (std::deque<Coord>::iterator a = snack.begin() + 3; a < snack.end(); a++)
 				if (a->getX() == snack.front().getX() && a->getY() == snack.front().getY()) {
@@ -204,8 +206,7 @@ void Snack::start() {
 				food = true;
 			}
 
-			//更新时间
-			timer = GetTickCount64();
+			
 
 			//更新记分板
 			paint.consoleOutput(snackLong - 1, BLACK, BLACK, (mapW + 3) * 2, 2);
