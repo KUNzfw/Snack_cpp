@@ -26,7 +26,6 @@ void Snack::selection() {
 		}
 	}
 	paint.setCursorPosition(0, 0);
-	int sel = 0;
 
 	//绘制地图方框
 	for (int x = 1; x <= mapW; x++) {
@@ -191,6 +190,9 @@ void Snack::start() {
 				}
 			//检测是否撞墙
 			if (snack.front().getX() == 2 || snack.front().getX() == mapW * 2 - 2 || snack.front().getY() == 0 || snack.front().getY() == mapH - 1) {
+				//清除蛇头
+				paint.consoleOutput("  ", WHITE, HIGHLIGHT, snack.front());
+
 				over();
 				return;
 			}
@@ -218,20 +220,39 @@ void Snack::start() {
 void Snack::over() {
 	//清除地图
 	clearMap();
-
-	paint.consoleOutput("GAME OVER!!!", BLACK, HIGHLIGHT, 20, 15);
+	paint.consoleOutput("GAME OVER!!!", BLACK, HIGHLIGHT, mapW - 7, mapH / 5);
 	//清除蛇的链表
 	snack.clear();
-	while (true)
+	//绘制菜单
+	Selection selec = Selection();
+	selec.addSelection("Restart", mapW - 5, mapH / 5 * 3, 0);
+	selec.addSelection("Back", mapW - 5, mapH / 5 * 4, 1);
+	selec.show();
+	switch (selec.waitForChoose())
 	{
-		//按回车键回到开始界面
-		if (kbInput.ifKeyPress())
-			if (kbInput.getKeyBoardChar() == enter) {
-				selection();
-				return;
+	case  0:
+		//清除计分板
+		for (int x = mapW; x <= mapW + 10; x++)
+		{
+			for (int y = 0; y < mapH; y++)
+			{
+				if (x == mapW + 10 || y == 0 || y == mapH - 1)
+				{
+					paint.consoleOutput("  ", BLACK, HIGHLIGHT, x * 2, y);
+				}
+				else
+				{
+					paint.consoleOutput("  ", BLACK, HIGHLIGHT, x * 2, y);
+				}
 			}
-		//减少cpu占用
-		Sleep(1);
+		}
+		paint.setCursorPosition(0, 0);
+
+		start();
+		return;
+	case 1:
+		selection();
+		return;
 	}
 }
 
