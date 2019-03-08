@@ -1,4 +1,4 @@
-//mian文件
+//mian鏂囦欢
 
 #include <iostream>
 #include "Snack.h"
@@ -8,7 +8,7 @@ using namespace kun;
 Snack game = Snack();
 
 int main() {
-	//隐藏光标。
+	//闅愯棌鍏夋爣
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cci;
 	GetConsoleCursorInfo(hOut, &cci);
