@@ -58,6 +58,9 @@ void Snack::selection() {
 //游戏开始
 void Snack::start() {
 
+	//加速前进
+	bool isSpeedUp = false;
+
 	//清除地图
 	clearMap();
 
@@ -102,30 +105,56 @@ void Snack::start() {
 			{
 			case W:
 			case w:
-				if (direction != SOUTH)
-					temp = NORTH;
+				if (direction != NORTH)
+				{
+					if (direction != SOUTH)
+						temp = NORTH;
+					isSpeedUp = false;
+				}
+				else
+					isSpeedUp = true;
 				break;
 			case S:
 			case s:
-				if (direction != NORTH)
-					temp = SOUTH;
+				if (direction != SOUTH)
+				{
+					if (direction != NORTH)
+						temp = SOUTH;
+					isSpeedUp = false;
+				}
+				else
+					isSpeedUp = true;
 				break;
 			case A:
 			case a:
-				if (direction != EAST)
-					temp = WEST;
+				if (direction != WEST)
+				{
+					if (direction != EAST)
+						temp = WEST;
+					isSpeedUp = false;
+				}
+				else
+					isSpeedUp = true;
 				break;
 			case D:
 			case d:
-				if (direction != WEST)
-					temp = EAST;
+				if (direction != EAST)
+				{
+					if (direction != WEST)
+						temp = EAST;
+					isSpeedUp = false;
+				}
+				else
+					isSpeedUp = true;
 				break;
 			default:
 				break;
 			}
 		}
+		else
+			isSpeedUp = false;
 		//游戏更新 
-		if (GetTickCount64() - timer >= (ULONGLONG)gameSpeed)
+		if (GetTickCount64() - timer >= (isSpeedUp ? ((ULONGLONG)gameSpeed - 100) : (ULONGLONG)gameSpeed))
 		{
 			direction = temp;
 
@@ -206,7 +235,7 @@ void Snack::start() {
 				food = true;
 			}
 
-			
+
 
 			//更新记分板
 			paint.consoleOutput(snackLong - 1, BLACK, BLACK, (mapW + 3) * 2, 2);
@@ -225,9 +254,9 @@ void Snack::over() {
 	//清除蛇的链表
 	snack.clear();
 	//绘制菜单
-	Selection selec = Selection();
-	selec.addSelection("Restart", mapW - 5, mapH / 5 * 3, 0);
-	selec.addSelection("Back", mapW - 5, mapH / 5 * 4, 1);
+	Selection selec = Selection(true);
+	selec.addSelection("Restart", (mapW / 3) * 2 - 5, mapH / 5 * 3, 0);
+	selec.addSelection("Back", (mapW / 3 * 2) * 2 - 5, mapH / 5 * 3, 1);
 	selec.show();
 	switch (selec.waitForChoose())
 	{

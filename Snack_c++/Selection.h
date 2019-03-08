@@ -20,7 +20,10 @@ namespace kun {
 		std::deque<AnSelection> selectionList;
 		int total = 0;
 		int localtion = 0;
+		bool ishorizontal = false;
 	public:
+		Selection(bool i);
+		Selection();
 		void addSelection(AnSelection as);
 		void addSelection(std::string text, int x, int y ,int id);
 		void show();

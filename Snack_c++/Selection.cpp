@@ -2,6 +2,13 @@
 using namespace kun;
 Paint paint = Paint();
 KeyBoradInput kbInput = KeyBoradInput();
+kun::Selection::Selection(bool i)
+{
+	ishorizontal = i;
+}
+kun::Selection::Selection()
+{
+}
 void kun::Selection::addSelection(AnSelection as)
 {
 	selectionList.push_back(as);
@@ -35,32 +42,66 @@ int kun::Selection::waitForChoose()
 		//检测键盘事件
 		if (kbInput.ifKeyPress())
 		{
-			switch (kbInput.getKeyBoardChar())
+
+			if (!ishorizontal)
 			{
-			case W:
-			case w:
-				if (localtion != 0)
+				switch (kbInput.getKeyBoardChar())
 				{
-					//上一个选项
-					paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
-					localtion--;
-					paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+				case W:
+				case w:
+					if (localtion != 0)
+					{
+						//上一个选项
+						paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+						localtion--;
+						paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+					}
+					break;
+				case S:
+				case s:
+					if (localtion != total - 1)
+					{
+						//下一个选项
+						paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+						localtion++;
+						paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+					}
+					break;
+				case enter:
+					//返回id
+					return selectionList[localtion].id;
+					break;
 				}
-				break;
-			case S:
-			case s:
-				if (localtion != total - 1)
+			}
+			else
+			{
+				switch (kbInput.getKeyBoardChar())
 				{
-					//下一个选项
-					paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
-					localtion++;
-					paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+				case A:
+				case a:
+					if (localtion != 0)
+					{
+						//上一个选项
+						paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+						localtion--;
+						paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+					}
+					break;
+				case D:
+				case d:
+					if (localtion != total - 1)
+					{
+						//下一个选项
+						paint.consoleOutput(selectionList[localtion].text, BLACK, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+						localtion++;
+						paint.consoleOutput(selectionList[localtion].text, HIGHLIGHT, WHITE, selectionList[localtion].x, selectionList[localtion].y);
+					}
+					break;
+				case enter:
+					//返回id
+					return selectionList[localtion].id;
+					break;
 				}
-				break;
-			case enter:
-				//返回id
-				return selectionList[localtion].id;
-				break;
 			}
 		}
 		Sleep(1);//减少cpu占用
