@@ -4,6 +4,13 @@ using namespace kun;
 
 
 void Snack::init() {
+	//Òþ²Ø¹â±ê
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cci;
+	GetConsoleCursorInfo(hOut, &cci);
+	cci.bVisible = false;
+	SetConsoleCursorInfo(hOut, &cci);
+
 	selection();
 }
 void Snack::selection() {
