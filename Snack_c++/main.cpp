@@ -8,7 +8,7 @@ using namespace kun;
 Snack game = Snack();
 
 int main() {
-	//隐藏光标
+	//隐藏光标。
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cci;
 	GetConsoleCursorInfo(hOut, &cci);
